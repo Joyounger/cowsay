@@ -8,6 +8,16 @@ char* cow[] = {"     \\   ^__^                 ",
                "              | |----W  |   ",
                "              | |     | |   "};
 
+char* tux[] = {" \\            ",
+				"	\			",
+				"		.--.    ",
+				"	   |o_o |
+				"	   |:_/ |
+				"	  //   \\ \\
+				"	 (|     | )
+				"	/'\\_   _/`\\
+				"	\\___)=(___/ "};
+
 void print_cow(void);
 void print_message(char*, int);
 void print_message_multilines(char*, int);
