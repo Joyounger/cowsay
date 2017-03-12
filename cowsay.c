@@ -1,22 +1,36 @@
+/*
+    2017-03-13  1.1 support more pic,and small fix
+    
+
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char* cow[] = {"     \\   ^__^                 ",                
-               "      \\  (OO)\\__________    ",
-               "         (__)\\          )\\/\\",
-               "              | |----W  |   ",
-               "              | |     | |   "};
+#include "pic.h"
 
-char* tux[] = {" \\            ",
-				"	\			",
-				"		.--.    ",
-				"	   |o_o |
-				"	   |:_/ |
-				"	  //   \\ \\
-				"	 (|     | )
-				"	/'\\_   _/`\\
-				"	\\___)=(___/ "};
+
+// 使用说明：
+// ./cowsay "the message we want so say"
+
+void print_tux(void)
+{
+    int i;
+    for(i = 0; i < 7; i++) {
+        printf("%s\n", tux[i]);
+    }
+}
+
+void print_koala(void)
+{
+    int i;
+    for(i = 0; i < 5; i++) {
+        printf("%s\n", koala[i]);
+    }
+}
+
 
 void print_cow(void);
 void print_message(char*, int);
@@ -26,42 +40,36 @@ void clean_stdin(void);
 int main(int argc, char* argv[])
 {
     int length = 0;
-    char message[1000] = {0};
+    char message[1000] = { 0 };
     
-    if(argc >= 2)
-   {
-        if((length = strlen(argv[1])) < 42)
-        {
+    if(argc >= 2) {
+        // 目前只支持一个字符串作为输入参数，因此只判断argv[1]
+        if((length = strlen(argv[1])) < 42) { // 如果argv[1]长度超过42,就多行显示
             print_message(argv[1], length);
-        }
-        else
-        {
+        } else {
             print_message_multilines(argv[1], length);
         }
-    }
-    else
-    {
-        printf("Entrez le message que vous voulez afficher : \n");
-        scanf("%[^\n]s", message);
+    } else {
+        printf("please enter the message you want to display : \n");
+        scanf("%[^\n]", message); //scanf的%[]格式控制符，表明当输入\n时才结束
 
-	if (strlen(message) > 255){
-	  printf("Usage: 255 character limit\n");
-	  exit(EXIT_FAILURE);
-	}	 
+        if (strlen(message) > 255) {
+          printf("Usage: max 255 character limit\n");
+          exit(EXIT_FAILURE);
+        }	 
 
         printf("\n\n");
         
-        if((length = strlen(message)) < 42)
-        {
+        if((length = strlen(message)) < 42) {
             print_message(message, length);
-        }
-        else
-        {
+        } else {
             print_message_multilines(message, length);
         }
     }
    
-    print_cow();
+    //print_cow();
+    //print_tux();
+    print_koala();
     //clean_stdin();
     printf("\n");
     exit(EXIT_SUCCESS);
@@ -154,8 +162,7 @@ void print_message(char* message, int length)
     putc(' ', stdout);
     
     int i;
-    for(i = 0; i < message_length+1; i++)
-    {
+    for(i = 0; i < message_length+1; i++) {
         putc('_', stdout);
     }
     putc('\n', stdout);
